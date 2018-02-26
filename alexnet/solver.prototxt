@@ -1,0 +1,23 @@
+train_net: "train.prototxt"
+test_net: "val.prototxt"
+test_iter: 736
+# make test net, but don't invoke it from the solver itself
+test_interval: 999999999
+display: 100
+average_loss: 20
+# lr_policy: "fixed"
+lr_policy: "step"
+stepsize: 10000
+gamma: 0.1
+# lr for normalized softmax
+base_lr: 1e-5
+# standard momentum
+momentum: 0.99
+# gradient accumulation
+iter_size: 20
+max_iter: 20000
+weight_decay: 0.0005
+snapshot: 2000
+snapshot_prefix: "snapshot/River_16B_withADE"
+test_initialization: true
+solver_mode: GPU

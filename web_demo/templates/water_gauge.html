@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+
+<head>
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Water Gauge Detection</title>
+
+	<!-- Mobile Specific
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" type="text/css"  href="static/css/style.css">
+	
+	
+	<!-- Web Fonts
+  ================================================== -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	
+	<!-- JS
+  ================================================== -->
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script src='static/js/twitter.js'></script>
+	<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type='text/javascript' src="static/js/twitter.js"></script>
+	<script type='text/javascript' src="static/js/custom.js"></script>
+	<script type='text/javascript' src="static/js/carousel.js"></script>
+	<script type='text/javascript' src="static/js/jquery.flexslider.js"></script>
+	<script type='text/javascript' src="static/js/shortcodes.js"></script>
+	<script type='text/javascript' src="static/js/imagebox.min.js"></script>
+	 <!-- Script to instantly classify an image once it is uploaded. -->
+	    <script type="text/javascript">
+	      $(document).ready(
+		function(){
+		  $('#detectfile').attr('disabled',true);
+		  $('#imagefile_detect').change(
+		    function(){
+		      if ($(this).val()){
+		        $('#formupload').submit();
+		      }
+		    }
+		  );
+		}
+	      );
+	    </script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(document).ready(function($){
+
+					// Create the dropdown bases
+					$("<select />").appendTo("#navigation");
+					
+					// Create default option "Go to..."
+					$("<option />", {
+					   "selected": "selected",
+					   "value"   : "",
+					   "text"    : "Menu"
+					}).appendTo("#navigation select");
+					
+					
+					// Populate dropdowns with the first menu items
+					$("#navigation li a").each(function() {
+						var el = $(this);
+						$("<option />", {
+							"value"   : el.attr("href"),
+							"text"    : el.text()
+						}).appendTo("#navigation select");
+					});
+					
+					//make responsive dropdown menu actually work			
+					$("#navigation select").change(function() {
+						window.location = $(this).find("option:selected").val();
+					});
+
+			});
+	</script>
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->	
+
+	<!-- Contact Form Validation - Motools -->	
+	<script type="text/javascript" language="javascript" src="static/js/contact/m14_p.js"></script> 
+	<script type="text/javascript" language="javascript" src="static/js/contact/m14_m.js"></script>
+	<script type="text/javascript" language="javascript" src="static/js/contact/formcheck.js"></script>
+	<script type="text/javascript" language="javascript" src="static/js/contact/add.js"></script>
+
+	
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Header -->
+	<div id="header">
+	
+		<!-- 960 Container -->
+		<div class="container">
+		
+			<!-- Logo -->
+			<div class="four columns">
+					<div id="logo"><a href="index-2.html"><img src="static/img/logo.png" alt="" /></a></div>
+			</div>
+			
+			<div class="twelve columns">
+			
+				<!-- Menu -->
+				<div id="navigation">
+				  <ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/area">Segmentation</a></li>
+					<li><a id="current" href="/gauge">Detection</a></li>
+				  </ul>
+				</div>			
+	
+			</div>
+		</div>
+	</div><!-- End Header -->
+	
+	<!-- Page Subtitle -->
+	<div id="subtitle">
+	
+		<!-- 960 Container -->
+		<div class="container">
+			<div class="sixteen columns">
+				<h3>Water Gauge Detection Demos</h3>
+				<div class="flexslider home">
+					<img src="static/img/img_slider_02.jpg" alt="" />
+	      			</div>
+			</div>
+		</div>
+		<!-- End 960 Container -->
+	
+	</div><!-- End Page Subtitle -->
+	
+	<!-- 960 Container -->
+	<div class="container">
+	      
+	      <a href="images/test.jpg">Click for a Quick Example</a>
+
+	      <form role="form" action="detect_url" method="get">
+		<div class="form-group">
+		  <div class="input-group">
+		    <input type="text" class="form-control" name="imageurl_detect" id="imageurl_detect" placeholder="Provide an image URL">
+		    <span class="input-group-btn">
+		      <input class="btn btn-primary" value="Detect URL" type="submit" id="detecturl"></input>
+		    </span>
+		  </div><!-- /input-group -->
+		</div>
+	      </form>
+
+	      <form id="formupload" class="form-inline" role="form" action="detect_upload" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+		  <label for="imagefile_detect">Or upload an image:</label>
+		  <input type="file" name="imagefile_detect" id="imagefile_detect">
+		</div>
+		<!--<input type="submit" class="btn btn-primary" value="Classify File" id="classifyfile"></input>-->
+	      </form>
+	      {% if has_result %}
+	      {% if not originsrc_detect %}
+	      <!-- we have error in the result. -->
+	      <div class="alert alert-danger">{{ originsrc_detect }} Did you provide a valid URL or a valid image file? </div>
+	      {% else %}
+	      <h3>Result</h3>
+	      <p> FCN took {{ time }} seconds. </p>
+		<p> {{measure_result}} </p>
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ originsrc_detect }} rel="imagebox[gallery]" title="Input Image for Segmentation"><img src={{ originsrc_detect }} alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Input Image</a></h4>
+						This is the input image uploaded.
+					</div>
+				</div>
+			</div>
+		
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ detectionsrc }} rel="imagebox[gallery]" title="Binary Segmentation Prediction"><img src={{ detectionsrc }} alt=""/><div class="overlay link"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Binary Segmentation Prediction</a></h4>
+						Input the original image to FCN, and got the corresponding prediction. 
+					</div>
+				</div>
+			</div>
+		
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ scalesrc }} rel="imagebox[gallery]" title="Segmentation based onpriginal image"><img src={{ scalesrc }} alt=""/><div class="overlay link"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Segmentaion</a></h4>
+						Visualized the segmentation on the original image.
+					</div>
+				</div>
+			</div>
+	      {% endif %}
+	      
+	      {% endif %}
+	    </div>
+		
+	</div>
+	<!-- End 960 Container -->
+
+	<!-- Footer -->
+		<!--  Footer - Copyright-->
+		<div id="footer_bottom">
+			<!-- 960 Container -->
+			<div class="container">
+			    <div class="navbar-fixed-bottom">
+				<div class="eight columns">
+					<div class="copyright">Copyright 2017 by <span>Tian Zhang</span>. All Rights Reserved.</div>
+				</div>
+			    <div>
+			</div><!-- End 960 Container -->
+		</div>
+		
+		<!-- Back To Top Button -->
+		<div id="backtotop"><a href="#"></a></div>
+		
+		<!-- Imagebox Build -->
+		<script src="static/js/imagebox.build.js"></script>
+	
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+</html>

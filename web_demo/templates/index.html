@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Water Demo</title>
+
+	<!-- Mobile Specific
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" type="text/css"  href="static/css/style.css">
+	
+	<!-- Web Fonts
+  ================================================== -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	
+	<!-- JS
+  ================================================== -->
+	<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type='text/javascript' src="static/js/twitter.js"></script>
+	<script type='text/javascript' src="static/js/custom.js"></script>
+	<script type='text/javascript' src="static/js/carousel.js"></script>
+	<script type='text/javascript' src="static/js/jquery.flexslider.js"></script>
+	<script type='text/javascript' src="static/js/shortcodes.js"></script>
+	<script type='text/javascript' src="static/js/imagebox.min.js"></script>
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->	
+
+	<!--[if (gte IE 6)&(lte IE 8)]>
+	  	<script src="static/js/selectivizr.js"></script>
+	<![endif]-->
+	
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Header -->
+	<div id="header">
+	
+		<!-- 960 Container -->
+		<div class="container">
+		
+			<!-- Logo -->
+			<div class="four columns">
+					<div id="logo"><a href="/"><img src="static/img/logo.png" alt="" /></a></div>
+			</div>
+			
+			<div class="twelve columns">
+			
+				<!-- Menu -->
+				<div id="navigation">
+				  <ul>
+					<li><a id="current" href="/">Home</a></li>
+					<li><a href="/area">Segmentation</a></li>
+					<li><a href="/gauge">Detection</a></li>
+				  </ul>
+				</div>		
+	
+			</div>
+		</div>
+	</div><!-- End Header -->
+	
+	<!-- 960 Container -->
+	<div class="container">
+	
+		<!-- Tagline -->
+		<div class="sixteen columns">
+			<div id="tagline">
+				<p>Welcome to <a href="/">Water Demo</a>. Segmentation of River and Water Area.</p>
+				<p>Detection of Water Gauge and Reading Gauge Scale.</p>
+			</div>
+		</div>
+		
+		<!-- Slider -->
+		<div class="sixteen columns">
+		</div>
+		<div class="sixteen columns"><h2 class="related-title"><span>Demo Function</span></h2></div>
+			<div class="sixteen columns" id="divider"></div>
+			
+				<!-- 1/3 Columns -->
+				<div class="one-third column">		
+					<div class="feature">
+						<div class="feature-circle green">1</div>
+						<div class="feature-description">
+						<h4>Water Segmentation</h4>
+						We used FCN(including 8s and alexnet based) neural network to train segmentation model for water area detection, which can help related administration department to boardcast emergent flood information timely.
+						</div>
+					</div>
+				</div>
+				
+				<!-- 1/3 Columns -->
+				<div class="one-third column">		
+					<div class="feature">
+						<div class="feature-circle green">2</div>
+						<div class="feature-description">
+						<h4>Water Gauge Detection</h4>
+						We deployed Fast-R-CNN to train our dataset for getting a prediction model for Water Gauge. With deploying such model on related camera system, we can get detected and labelled water gauge in each video frame.
+						</div>
+					</div>
+				</div>
+				
+				<!-- 1/3 Columns -->
+				<div class="one-third column">		
+					<div class="feature">
+						<div class="feature-circle green">3</div>
+						<div class="feature-description">
+						<h4>Water Gauge Measurement</h4>
+						Since we have some problem to detection small object by using Fast-R-CNN, we decide to use traditional computer vision theory to extract features and make detection. In this part, we deployed two workflows for scale measurement. 1. HOG+SVM based; 2. scale contour detection based.  
+						</div>
+					</div>
+				</div>
+				<!-- End Features -->
+	</div>
+	<!-- End 960 Container -->
+
+	<!-- 960 Container -->
+	<div class="container">
+		<div class="sixteen columns" style="padding-top: 5px; padding-bottom: 5px">
+			<h2 class="related-title"><span>Water Segmentation</span></h2>
+			<h4>Net Visualization</h4>
+		</div>
+		<div class="item">
+					<div class="item-img">
+						<a href="static/img/netStructure.jpg" rel="imagebox[gallery]" title="Net Structure"><img src="static/img/netStructure.jpg" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+			</div>
+		
+			<!-- Title -->
+		<div class="sixteen columns" style="padding-top: 5px; padding-bottom: 5px">
+			<h4><span>Net Illustration</span></h4>
+		</div>
+		<div style="padding-top: 5px; margin-bottom: 5px;">
+			<!-- Blog Post - 1/4 Columns -->
+			<div class="four columns" style="padding-left: 0; margin-left:0">
+				<div class="item">
+					<ul class="carousel">
+						<li class="testimonial">
+							<div class="testimonials">layer {<br>
+											  name: "conv1"<br>
+											  type: "Convolution"<br>
+											  bottom: "data"<br>
+											  top: "conv1"<br>
+											  convolution_param {<br>
+											    &nbsp &nbsp num_output: 96<br>
+											    &nbsp &nbsp pad: 100<br>
+											    &nbsp &nbsp kernel_size: 11<br>
+											    &nbsp &nbsp group: 1<br>
+											    &nbsp &nbsp stride: 4<br>
+											    &nbsp &nbsp weight_filler {<br>
+											      &nbsp &nbsp &nbsp &nbsp type: "xavier"<br>
+											    &nbsp &nbsp }<br>
+											    &nbsp &nbsp bias_filler {<br>
+											      &nbsp &nbsp &nbsp &nbsp type: "constant"<br>
+											      &nbsp &nbsp &nbsp &nbsp value: 0<br>
+											    &nbsp &nbsp &nbsp &nbsp}<br>
+											  &nbsp &nbsp}<br>
+											}</div>
+							<div class="testimonials_bg"></div>
+							<div class="testimonials_author">Conv1, <span>Convolutional Layer(In our structure, we add 5 convolution layer(conv1 to conv5),and add one Relu, one Pool and one Norm layer after each convolutional layer.)</span></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Blog Post - 1/4 Columns -->
+			<div class="four columns">
+				<div class="item">
+					<ul class="carousel">
+						<li class="testimonial">
+							<div class="testimonials">layer {&nbsp &nbsp name: "relu1"<br>
+											  &nbsp &nbsp type: "ReLU"<br>
+											  &nbsp &nbsp bottom: "conv1"<br>
+											  &nbsp &nbsp top: "conv1"<br>
+											}<br>
+											layer {
+											  &nbsp &nbsp name: "pool1"<br>
+											  &nbsp &nbsp type: "Pooling"<br>
+											  &nbsp &nbsp bottom: "conv1"<br>
+											  &nbsp &nbsp top: "pool1"<br>
+											  &nbsp &nbsp pooling_param {<br>
+											    &nbsp &nbsp&nbsp &nbsp pool: MAX<br>
+											    &nbsp &nbsp&nbsp &nbsp kernel_size: 3<br>
+											    &nbsp &nbsp&nbsp &nbsp stride: 2<br>
+											  &nbsp &nbsp}}<br>
+											layer {
+											  &nbsp &nbsp name: "norm1"<br>
+											  &nbsp &nbsp type: "LRN"<br>
+											  &nbsp &nbsp bottom: "pool1"<br>
+											  &nbsp &nbsp top: "norm1"<br>
+											  &nbsp &nbsp lrn_param {<br>
+											    &nbsp &nbsp &nbsp &nbsp local_size: 5<br>
+											    &nbsp &nbsp &nbsp &nbsp alpha: 0.0001<br>
+											    &nbsp &nbsp &nbsp &nbsp beta: 0.75<br>
+											  &nbsp &nbsp }}</div>
+							<div class="testimonials_bg"></div>
+							<div class="testimonials_author">Relu1 + Pool1 + Norm1, <span>connected with Conv1</span></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Blog Post - 1/4 Columns -->
+			<div class="four columns" style="padding-right: 0; margin-right:0">
+				<div class="item">
+					<ul class="carousel">
+						<li class="testimonial">
+							<div class="testimonials">layer {<br>
+											  name: "fc6"<br>
+											  type: "Convolution"<br>
+											  bottom: "pool5"<br>
+											  top: "fc6"<br>
+											  convolution_param {<br>
+											    &nbsp &nbsp num_output: 4096<br>
+											    &nbsp &nbsp pad: 0<br>
+											    &nbsp &nbsp kernel_size: 6<br>
+											    &nbsp &nbsp group: 1<br>
+											    &nbsp &nbsp stride: 1<br>
+											    &nbsp &nbsp weight_filler {<br>
+											      &nbsp &nbsp &nbsp &nbsp type: "xavier"<br>
+											    }<br>
+											    &nbsp &nbsp bias_filler {<br>
+											      &nbsp &nbsp &nbsp &nbsp type: "constant"<br>
+											      &nbsp &nbsp &nbsp &nbsp value: 1<br>
+											    &nbsp &nbsp &nbsp &nbsp}<br>
+											  &nbsp &nbsp }<br>
+											}</div>
+							<div class="testimonials_bg"></div>
+							<div class="testimonials_author">FC6, <span>Fully Connected Layer (In our structure, we add two FC layers at the end of the fifth convolutional layer Conv5, and add one Relu and one drop layer after each FC layer.)</span></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Blog Post - 1/4 Columns -->
+			<div class="four columns" style="padding-right: 0; margin-right:0">
+				<div class="item">
+					<ul class="carousel">
+						<li class="testimonial">
+							<div class="testimonials">layer {<br>
+											  &nbsp &nbsp name: "relu6"<br>
+											  &nbsp &nbsp type: "ReLU"<br>
+											  &nbsp &nbsp bottom: "fc6"<br>
+											  &nbsp &nbsp top: "fc6"<br>
+											}<br>
+											layer {<br>
+											  &nbsp &nbsp name: "drop6"<br>
+											  &nbsp &nbsp type: "Dropout"<br>
+											  &nbsp &nbsp bottom: "fc6"<br>
+											  &nbsp &nbsp top: "fc6"<br>
+											  &nbsp &nbsp dropout_param {<br>
+											    &nbsp &nbsp &nbsp &nbsp dropout_ratio: 0.5<br>
+											  &nbsp &nbsp }<br>
+											}
+											</div>
+							<div class="testimonials_bg"></div>
+							<div class="testimonials_author">Relu6 + Drop6, <span>After two FC layers, we add a Relu and a  Drop layer after them, and give them appropriate dropout ratio, since the dropout ratio sometimes could help us to avoid overfitting.<br><br><br><br><br><br><br></span></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	<div class="container">
+		<div class="sixteen columns" style="padding-top: 5px; padding-bottom: 5px">
+			<h4><span>Train Parameters</span></h4>
+		</div>
+			<div class="four columns">
+				<div class="testimonials-carousel">
+					<ul class="carousel">
+				
+						<li class="testimonial">
+							<div class="testimonials">average_loss: 20<br>
+											lr_policy: "step"<br>
+											stepsize: 10000<br>
+											gamma: 0.1<br>
+											# lr for normalized softmax<br>
+											base_lr: 1e-5<br>
+											# standard momentum<br>
+											momentum: 0.99<br>
+											# gradient accumulation<br>
+											iter_size: 8<br>
+											max_iter: 20000<br>
+											weight_decay: 0.0005<br>
+											</div>
+							<div class="testimonials_bg"></div>
+							<div class="testimonials_author">Solver Parameters for Training Net</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="four columns" style="padding-left: 0; margin-left:0">
+				<div class="item">
+					<p>We set out training parameter as left memo. During training, we have done following modifications :<br><br>1.we modified weight filler and bias filler at each convolutional layer, since we found with fixed weight iteration mode, we got overfitting situation.<br><br>2.we change learning rate policy from fixed to step.(Learning rate initialized from a relatively high value.)</p>
+				</div>
+			</div>
+			<div class="four columns" style="padding-left: 0; margin-left:0">
+				<div class="item">
+					<div class="item-img">
+						<a href="static/img/train_withADE.png" rel="imagebox[gallery]" title="Loss Value with fixed Learning Rate"><img src="static/img/train_withADE.png" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<p>At the begining, we used fixed learning rate to train our segmentation model. After 20k iteration, we found that the loss value did decrease dramatically.Thus, we decide to use step decrease learning rating for model training.</p>
+				</div>
+			</div>
+			<div class="four columns" style="padding-left: 0; margin-left:0">
+				<div class="item">
+					<div class="item-img">
+						<a href="static/img/train_alexnet.png" rel="imagebox[gallery]" title="Loss Value Curve"><img src="static/img/train_alexnet.png" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<p>For step decrased learning rate, we set the initial learning rate to be 1e-5, and let it decease 0.1 each 10000 iterateion. And then we got the above loss value curve, which seems better than the original one with fixed learning rate, and the loss value decreased.</p>
+				</div>
+			</div>
+			<div class="sixteen columns" style="padding-top: 5px; padding-bottom: 5px">
+			<h4>Results</h4>
+			<div class="item">
+					<div class="item-img">
+						<a href="static/img/good.png" rel="imagebox[gallery]" title="Result with good Performance"><img src="static/img/good.png" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+			</div>
+			<div class="item">
+					<div class="item-img">
+						<a href="static/img/bad.png" rel="imagebox[gallery]" title="Result with bad Performance"><img src="static/img/bad.png" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+			</div>
+			<div class="item">
+					<div class="item-img">
+						<a href="static/img/gauge_result.png" rel="imagebox[gallery]" title="Result of Gauge Measurement based on opencv"><img src="static/img/gauge_result.png" alt=""/><div class="overlay zoom"></div></a>
+					</div>
+			</div>
+		</div>
+			
+	</div>
+	<!-- /End 960 Container -->
+
+	<!-- Footer -->
+	
+		<!--  Footer - Copyright-->
+		<div id="footer_bottom">
+			<!-- 960 Container -->
+			<div class="container">
+			  <nav class="navbar navbar-default navbar-fixed-bottom">
+    			     <div class="navbar-inner navbar-content-center">
+				<div class="eight columns">
+					<div class="copyright">Copyright 2017 by <span>Tian Zhang</span>. All Rights Reserved.</div>
+				</div>
+				
+				
+			    </div>
+			  </nav>
+			</div><!-- End 960 Container -->
+		</div>
+		
+		<!-- Back To Top Button -->
+		<div id="backtotop"><a href="#"></a></div>
+		
+		<!-- Imagebox Build -->
+		<script src="static/js/imagebox.build.js"></script>
+		
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+</html>

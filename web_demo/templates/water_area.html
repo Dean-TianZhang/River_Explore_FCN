@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Water Area Detection</title>
+
+	<!-- Mobile Specific
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" type="text/css"  href="static/css/style.css">
+	
+	
+	<!-- Web Fonts
+  ================================================== -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+	
+	<!-- JS
+  ================================================== -->
+	<script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type='text/javascript' src="static/js/twitter.js"></script>
+	<script type='text/javascript' src="static/js/custom.js"></script>
+	<script type='text/javascript' src="static/js/carousel.js"></script>
+	<script type='text/javascript' src="static/js/jquery.flexslider.js"></script>
+	<script type='text/javascript' src="static/js/shortcodes.js"></script>
+	<script type='text/javascript' src="static/js/imagebox.min.js"></script>
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->	
+
+	<!--[if (gte IE 6)&(lte IE 8)]>
+	  	<script src="static/js/selectivizr.js"></script>
+	<![endif]-->
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <!-- Script to instantly classify an image once it is uploaded. -->
+    <script type="text/javascript">
+      $(document).ready(
+        function(){
+          $('#classifyfile').attr('disabled',true);
+          $('#imagefile').change(
+            function(){
+              if ($(this).val()){
+                $('#formupload').submit();
+              }
+            }
+          );
+        }
+      );
+    </script>
+	
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Header -->
+	<div id="header">
+	
+		<!-- 960 Container -->
+		<div class="container">
+		
+			<!-- Logo -->
+			<div class="four columns">
+					<div id="logo"><a href="/"><img src="static/img/logo.png" alt="" /></a></div>
+			</div>
+			
+			<div class="twelve columns">
+			
+				<!-- Menu -->
+				<div id="navigation">
+				  <ul>
+					<li><a href="/">Home</a></li>
+					<li><a id="current" href="/area">Segmentation</a></li>
+					<li><a href="/gauge">Detection</a></li>
+				  </ul>
+				</div>			
+	
+			</div>
+		</div>
+	</div><!-- End Header -->
+	
+	<!-- Page Subtitle -->
+	<div id="subtitle">
+	
+		<!-- 960 Container -->
+		<div class="container">
+			<div class="sixteen columns">
+				<h3>Water Area Segmentation Demos</h3>
+				<div class="flexslider home">
+					<img src="static/img/img_slider_03.jpg" alt="" />
+	      			</div>
+			</div>
+		</div>
+		<!-- End 960 Container -->
+	
+	</div><!-- End Page Subtitle -->
+	
+	<!-- 960 Container -->
+	<div class="container">
+		<div>
+			<a href="/classify_url?imageurl=http%3A%2F%2Fimg1.ph.126.net%2F1peEOVyfMW-HtSMCbmXpSA%3D%3D%2F119345390225478136.jpg">Click for a Quick Example</a>
+		      </div>
+
+		      <form role="form" action="classify_url" method="get">
+			<div class="form-group">
+			  <div class="input-group">
+			    <input type="text" class="form-control" name="imageurl" id="imageurl" placeholder="Provide an image URL">
+			    <span class="input-group-btn">
+			      <input class="btn btn-primary" value="Classify URL" type="submit" id="classifyurl"></input>
+			    </span>
+			  </div><!-- /input-group -->
+			</div>
+		      </form>
+
+		      <form id="formupload" class="form-inline" role="form" action="classify_upload" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+			  <label for="imagefile">Or upload an image:</label>
+			  <input type="file" name="imagefile" id="imagefile">
+			</div>
+			<!--<input type="submit" class="btn btn-primary" value="Classify File" id="classifyfile"></input>-->
+		      </form>
+
+		      {% if has_result %}
+		      {% if not originsrc %}
+		      <!-- we have error in the result. -->
+		      <div class="alert alert-danger">{{ originsrc }} Did you provide a valid URL or a valid image file? </div>
+		      {% else %}
+		      <h3>Result</h3>
+		      
+		      <p> FCN took {{ time }} seconds. </p>
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ originsrc }} rel="imagebox[gallery]" title="Input Image for Segmentation"><img src={{ originsrc }} alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Input Image</a></h4>
+						This is the input image uploaded.
+					</div>
+				</div>
+			</div>
+		
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ predictionsrc }} rel="imagebox[gallery]" title="Binary Segmentation Prediction"><img src={{ predictionsrc }} alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Binary Segmentation Prediction</a></h4>
+						Input the original image to FCN, and got the corresponding prediction. 
+					</div>
+				</div>
+			</div>
+		
+			<!-- Project - 1/3 Columns -->
+			<div class="one-third column">
+				<div class="item">
+					<div class="item-img">
+						<a href={{ segmentationsrc }} rel="imagebox[gallery]" title="Segmentation based onpriginal image"><img src={{ segmentationsrc }} alt=""/><div class="overlay zoom"></div></a>
+					</div>
+					<div class="item-meta">
+						<h4><a href="#">Segmentaion</a></h4>
+						Visualized the segmentation on the original image.
+					</div>
+				</div>
+			</div>
+
+		      <br>
+		      {% endif %}
+		      {% endif %}
+		    </div>
+		
+	</div>
+	<!-- End 960 Container -->
+
+	<!-- Footer -->
+		<!--  Footer - Copyright-->
+		<div id="footer_bottom">
+			<!-- 960 Container -->
+			<div class="container">
+				
+				<div class="eight columns">
+					<div class="copyright">Copyright 2017 by <span>Tian Zhang</span>. All Rights Reserved.</div>
+				</div>
+				
+			</div><!-- End 960 Container -->
+		</div>
+		
+		<!-- Back To Top Button -->
+		<div id="backtotop"><a href="#"></a></div>
+		
+		<!-- Imagebox Build -->
+		<script src="static/js/imagebox.build.js"></script>
+	
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+</body>
+</html>
